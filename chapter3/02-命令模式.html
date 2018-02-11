@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>02-命令模式</title>
+</head>
+<body>
+<button id="do">执行</button>
+<button id="undo">回退</button>
+
+<script>
+var TV = {
+  open: function () {
+    console.log('打开')
+  },
+  close: function () {
+    console.log('关闭')
+  }
+}
+
+var TVCommand = function (receiver) {
+  this.receiver = receiver
+}
+TVCommand.prototype.execute = function () {
+  this.receiver.open()
+}
+TVCommand.prototype.undo = function () {
+  this.receiver.close()
+}
+
+var setCommand = function (command) {
+  document.getElementById('do').onclick = function () {
+    command.execute()
+  }
+  document.getElementById('undo').onclick = function () {
+    command.undo()
+  }
+}
+
+setCommand(new TVCommand(TV))
+</script>
+</body>
+</html>
