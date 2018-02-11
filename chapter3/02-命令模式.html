@@ -28,6 +28,20 @@ TVCommand.prototype.undo = function () {
   this.receiver.close()
 }
 
+var createCommand = function (receiver) {
+  var execute = function () {
+    return receiver.open()
+  }
+  var undo = function () {
+    return receiver.close()
+  }
+
+  return {
+    execute: execute,
+    undo: undo
+  }
+}
+
 var setCommand = function (command) {
   document.getElementById('do').onclick = function () {
     command.execute()
@@ -37,7 +51,8 @@ var setCommand = function (command) {
   }
 }
 
-setCommand(new TVCommand(TV))
+// setCommand(new TVCommand(TV))
+setCommand(createCommand(TV))
 </script>
 </body>
 </html>
