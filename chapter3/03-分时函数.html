@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>分时函数</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .container {
+      width: 500px;
+      margin: 10px auto;
+      border: 5px solid dodgerblue;
+      border-radius: 8px;
+    }
+
+    .item {
+      height: 30px;
+      margin: 8px;
+      border: 3px solid lightskyblue;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+<button id="load">加载好友</button>
+<div id="container" class="container">
+  <!--<div class="item"></div>-->
+</div>
+
+<script>
+let btn = document.querySelector('#load');
+let container = document.querySelector('#container');
+
+let data = [];
+for (let i = 0; i < 1000; i++) {
+  data.push(`好友 ${i}`);
+}
+let loadFriends = timeChunk(data, appendFriend, 8);
+
+btn.addEventListener('click', function () {
+  loadFriends();
+}, false);
+
+function appendFriend (friend) {
+  let element = document.createElement('div');
+  element.className = 'item';
+  element.innerText = friend;
+  container.appendChild(element);
+}
+
+// timeChunk 函数让创建节点的工作分批进行，比如把一次性创建 1000 个节点，改为每隔 200 毫秒创建 8 个节点
+function timeChunk (data, fn, count) {
+  let timer;
+
+  let start = function () {
+    for (let i = 0; i < Math.min(count || 1, data.length); i++) {
+      fn(data.shift())
+    }
+  };
+
+  return function () {
+    timer = setInterval(function () {
+      if (data.length === 0) {
+        clearInterval(timer);
+        timer = null;
+      } else {
+        start();
+      }
+    }, 200)
+  }
+}
+</script>
+</body>
+</html>
