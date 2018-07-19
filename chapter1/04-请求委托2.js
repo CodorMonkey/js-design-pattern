@@ -1,16 +1,20 @@
-var A = function () {
+function A () {
+  this.a = 'a'
+}
+
+A.prototype = {name: 'Monkey'};
+
+function B () {
 
 }
-A.prototype = {name: 'Monkey'}
 
-var B = function () {
+B.prototype = new A();
+B.prototype.constructor = B;
 
-}
-B.prototype = new A()
+let b = new B();
+console.log(b.name);
+console.log(b.a);
 
-var b = new B()
-console.log(b.name)
-
-console.log(b.__proto__)
-console.log(b.constructor)
-console.log(b.__proto__ === b.constructor.prototype)
+console.log(b.__proto__);
+console.log(b.__proto__.constructor);
+console.log(b.__proto__ === B.prototype);
