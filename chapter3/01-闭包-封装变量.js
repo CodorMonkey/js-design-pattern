@@ -1,41 +1,41 @@
-var cache = {}
-var mult = function () {
-  var key = Array.prototype.join.call(arguments, ',')
+let cache = {};
+let mult = function () {
+  let key = Array.prototype.join.call(arguments, ',');
   if (cache[key]) {
-    console.log('cache')
+    console.log('cache');
     return cache[key]
   }
-  var a = 1;
-  for (var i = 0, l = arguments.length; i < l; i++) {
+  let a = 1;
+  for (let i = 0, l = arguments.length; i < l; i++) {
     a *= arguments[i]
   }
   return cache[key] = a
-}
+};
 
-console.log(mult(2, 3))
-console.log(mult(2, 3))
+console.log(mult(2, 3));
+console.log(mult(2, 3));
 
 /** 闭包版 **/
-var mult2 = (function () {
-  var cache = {}
+let mult2 = (function () {
+  let cache = {};
 
   function calculate () {
-    var a = 1;
-    for (var i = 0, l = arguments.length; i < l; i++) {
+    let a = 1;
+    for (let i = 0, l = arguments.length; i < l; i++) {
       a *= arguments[i]
     }
     return a
   }
 
   return function () {
-    var key = Array.prototype.join.call(arguments, ',')
+    let key = Array.prototype.join.call(arguments, ',');
     if (cache[key]) {
-      console.log('cache')
+      console.log('cache');
       return cache[key]
     }
     return cache[key] = calculate.apply(null, arguments)
   }
-})()
+})();
 
-console.log(mult2(2, 3))
-console.log(mult2(2, 3))
+console.log(mult2(2, 3));
+console.log(mult2(2, 3));
