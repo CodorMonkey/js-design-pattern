@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>惰性单例</title>
+</head>
+<body>
+<button id="btn">login</button>
+
+<script>
+let createLoginLayer = function () {
+  let layer = document.createElement('div');
+  layer.innerHTML = 'login layer';
+  layer.style.display = 'none';
+  document.body.appendChild(layer);
+  return layer;
+};
+
+let createLoginLayerSingle = createSingle(createLoginLayer);
+
+let btn = document.querySelector('#btn');
+btn.addEventListener('click', function () {
+  let loginLayer = createLoginLayerSingle();
+  loginLayer.style.display = 'block';
+}, false);
+
+
+function createSingle (fn) {
+  let res;
+  return function () {
+    return res || (res = fn.apply(this, arguments));
+  }
+}
+</script>
+</body>
+</html>
