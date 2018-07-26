@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+<script>
+let img = (function () {
+  let image = document.createElement('img');
+  image.width = 100;
+  image.height = 90;
+  document.body.appendChild(image);
+  return {
+    setSrc: function (src) {
+      image.src = src;
+    },
+  };
+})();
+// img.setSrc('https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png');
+
+let imgProxy = (function () {
+  let image = document.createElement('img');
+  image.onload = function () {
+    img.setSrc(image.src);
+  };
+
+  return {
+    setSrc: function (src) {
+      img.setSrc('file://D:\\study\\frontend\\js-design-pattern\\img\\monkey.jpg');
+      image.src = src;
+    },
+  };
+})();
+imgProxy.setSrc('https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png');
+</script>
+</body>
+</html>
